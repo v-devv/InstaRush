@@ -25,6 +25,7 @@ const AddAddress = () => {
     zipcode : '',
     county: '',
     phone : '',
+    ratings : '',
   })
   const handleChange = (e)=>{
     const {name , value} = e.target;

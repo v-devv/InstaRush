@@ -10,7 +10,7 @@ import toast from 'react-hot-toast';
 
 const NavBar = () => {
     const [open, setOpen] = useState(false);
-    const { user, setUser, setShowUserLogin, seller,  navigate, axios, setSearchQuery, searchQuery, getCartCount } = useAppContext();
+    const { user, setUser, setShowUserLogin, seller, navigate, axios, setSearchQuery, searchQuery, getCartCount } = useAppContext();
 
     const logout = async () => {
         try {
@@ -43,9 +43,21 @@ const NavBar = () => {
             <div className='hidden sm:flex items-center gap-8'>
                 <NavLink to="/" >Home</NavLink>
                 <NavLink to="/products" >All Products</NavLink>
-                <p onClick={()=>{navigate('/seller');
-                    {window.location.reload()}
-                } } >Seller </p>
+                <span
+                    className='cursor-pointer'
+                    onClick={() => {
+                        setOpen(false);
+                        if (seller) {
+                            navigate('/seller');
+                        } else {
+                            navigate('/seller'); 
+                        }
+                    }}
+                >
+                    Seller
+                </span>
+
+
 
                 <div className='hidden lg:flex items-center text-sm gap-2 border border-gray-300 px-3 rounded-full'>
                     <input onChange={(e) => setSearchQuery(e.target.value)} type="text" placeholder='Search products ' className='py-1.5 w-full bg-transparent outline-none placeholder-gray-500' />
@@ -80,7 +92,9 @@ const NavBar = () => {
             </div>
 
             {open && (
-                <div className={`${open ? 'flex' : 'hidden'} absolute top-[60px] left-0 w-full bg-white shadow-md py-4 flex-col items-start gap-2 px-5 text-sm sm:hidden`}>
+                <div  className={`transition-all duration-300 ease-in-out transform 
+                    ${open ? 'flex translate-y-0 opacity-100' : '-translate-y-5 opacity-0 pointer-events-none'} 
+                    absolute top-[60px] left-0 z-10 w-full bg-white shadow-md py-4 flex-col items-start gap-2 px-5 text-sm sm:hidden`}>
                     <NavLink to="/" onClick={() => setOpen(false)} >Home</NavLink>
                     <NavLink to="/products" onClick={() => setOpen(false)} >All Products</NavLink>
                     {user && <NavLink to="/products" onClick={() => setOpen(false)} >My Orders</NavLink>}

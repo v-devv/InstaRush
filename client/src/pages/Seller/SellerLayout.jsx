@@ -4,7 +4,7 @@ import { useAppContext } from "../../context/AppContext";
 import toast from "react-hot-toast";
 
 const SellerLayout = () => {
-    const { axios ,navigate} = useAppContext()
+    const { axios ,navigate , setSeller} = useAppContext()
 
 const logout = async ()=>{
     try {
@@ -12,6 +12,7 @@ const logout = async ()=>{
         if(data.success){
             toast.success(data.message);
             navigate('/')
+            setSeller(null)
         }else{
             toast.error(data.message)
         }
