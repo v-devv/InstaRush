@@ -153,7 +153,7 @@ console.log(user , "user in context")
     } , [cartItems])
     const value = {axios, navigate, user, setUser, seller, setSeller  , showUserLogin, setShowUserLogin ,
          products, setProducts  , cartItems, setCartItems , addToCart , 
-         updateCartItems ,setCartItems , removeFromCart , searchQuery, setSearchQuery , getCartAmount , getCartCount , fetchProducts};
+         updateCartItems , removeFromCart , searchQuery, setSearchQuery , getCartAmount , getCartCount , fetchProducts};
     return (
         <AppContext.Provider value={value}>
             {children}
