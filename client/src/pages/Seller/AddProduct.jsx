@@ -63,6 +63,7 @@ const AddProduct = () => {
             <form onSubmit={onSubmitHandler} className="md:p-10 p-4 space-y-5 max-w-lg">
                 <div>
                     <p className="text-base font-medium">Product Image</p>
+                    <p className="text-sm text-gray-500 mt-1">✅ Tip: For best appearance, upload <span className="font-semibold">.png</span> images—transparent backgrounds and high quality help your product look more professional.</p>
                     <div className="flex flex-wrap items-center gap-3 mt-2">
                         {Array(4).fill('').map((_, index) => (
                             <label key={index} htmlFor={`image${index}`}>
@@ -125,7 +126,7 @@ const AddProduct = () => {
                      type="number" placeholder="Type here" className="outline-none md:py-2.5 py-2 px-3 rounded border border-gray-500/40" required />
                   
                 </div>
-                <button  className=" px-8 py-2.5 bg-indigo-500 text-white font-medium rounded cursor-pointer">ADD</button>
+                <button  className=" px-8 py-2.5 bg-purple-500 text-white font-medium rounded cursor-pointer">ADD</button>
             </form>
         </div>
     );

@@ -41,7 +41,7 @@ const logout = async ()=>{
                 </Link>
                 <div className="flex items-center gap-5 text-gray-500">
                     <p>Hi! Admin</p>
-                    <button onClick={logout} className='border rounded-full text-sm px-4 py-1 cursor-pointer'>Logout</button>
+                    <button onClick={logout} className='hover:border-purple-500 border rounded-full text-sm px-4 py-1 cursor-pointer'>Logout</button>
                 </div>
             </div>
             <div className="flex ">
@@ -49,7 +49,7 @@ const logout = async ()=>{
                 {sidebarLinks.map((item) => (
                     <NavLink to={item.path} key={item.name} end={item.path === "/seller"}
                         className={ ({isActive})=> `flex items-center py-3 px-4 gap-3 
-                            ${isActive ? "border-r-4 md:border-r-[6px] bg-indigo-500/10 border-indigo-500 text-indigo-500"
+                            ${isActive ? "border-r-4 md:border-r-[6px] bg-purple-500/10 border-purple-500 text-purple-500"
                                 : "hover:bg-gray-100/90 border-white text-gray-700"
                             }`
                         }
