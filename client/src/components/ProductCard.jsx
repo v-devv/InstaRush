@@ -7,7 +7,7 @@ const ProductCard = ( {product}) => {
 
 
   return product && (
-    <div onClick={ ()=> {navigate(`/products/${product.category}/${product._id}`); scrollTo(0, 0)}} 
+    <div onClick={ ()=> {navigate(`/products/${product.category}/${product._id}`); scrollTo(0,0)}} 
     className='w-full max-w-[224px] border border-gray-500/20 rounded-md px-3 md:px-4 py-4 bg-white mx-auto'>
         <div className='group cursor-pointer flex items-center justify-center px-2'>
             <img className='group-hover:scale-105 transition max-w-26 md:max-w-36' src={product.image[0]} alt="" />

@@ -1,4 +1,4 @@
-import React, { useEffect, useState } from 'react'
+import React, { use, useEffect, useState } from 'react'
 import { NavLink } from 'react-router-dom'
 import { assets } from '../assets/assets'
 import { CiShoppingCart } from "react-icons/ci";
@@ -11,7 +11,6 @@ import toast from 'react-hot-toast';
 const NavBar = () => {
     const [open, setOpen] = useState(false);
     const { user, setUser, setShowUserLogin, seller, navigate, axios, setSearchQuery, searchQuery, getCartCount } = useAppContext();
-
     const logout = async () => {
         try {
             const { data } = await axios.get('/api/user/logout');
@@ -96,6 +95,19 @@ const NavBar = () => {
                     ${open ? 'flex translate-y-0 opacity-100' : '-translate-y-5 opacity-0 pointer-events-none'} 
                     absolute top-[60px] left-0 z-10 w-full bg-white shadow-md py-4 flex-col items-start gap-2 px-5 text-sm sm:hidden`}>
                     <NavLink to="/" onClick={() => setOpen(false)} >Home</NavLink>
+                    <span
+                    className='cursor-pointer'
+                    onClick={() => {
+                        setOpen(false);
+                        if (seller) {
+                            navigate('/seller');
+                        } else {
+                            navigate('/seller'); 
+                        }
+                    }}
+                >
+                    Seller
+                </span>
                     <NavLink to="/products" onClick={() => setOpen(false)} >All Products</NavLink>
                     {user && <NavLink to="/products" onClick={() => setOpen(false)} >My Orders</NavLink>}
                     <NavLink to="/contact" onClick={() => setOpen(false)}> Contact</NavLink>
