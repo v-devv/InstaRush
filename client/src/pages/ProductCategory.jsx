@@ -9,6 +9,8 @@ const ProductCategory = ( ) => {
     const {category} = useParams();
     const searchCategory = categories.find((item)=>item.path.toLowerCase()===category);
     const filterProducts = products.filter((product)=> product.category.toLowerCase() === category);
+    const inStockProducts = filterProducts.filter((item) => item.inStock);
+    console.log("filterProducts " , filterProducts)
   return (
     <div className='mt-16'>
         {filterProducts  && (
@@ -18,9 +20,9 @@ const ProductCategory = ( ) => {
             </div>
         )}
         {
-            filterProducts.length > 0 ?(
+            inStockProducts.length > 0 ?(
                 <div className='grid grid-cols-2 sm:grid-cols-3 md:grid-cols-4 gap-3 md:gap-6 lg:grid-cols-5 mt-6' >
-                    {filterProducts.map((product ,i)=>(
+                    {inStockProducts.map((product ,i)=>(
                         <ProductCard key={i} product={product}  />
                     ) )}
                  </div>
