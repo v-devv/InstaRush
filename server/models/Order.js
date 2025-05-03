@@ -19,7 +19,7 @@ const orderSchema = new mongoose.Schema({
     paymentType : {type : String , require : true },
     isPaid : {type : String , require : true  ,default:false},
 
-} , {timeseries:true});
+} , {timestamps:true});
 
 const Order = mongoose.models.order || mongoose.model('order' , orderSchema);
 

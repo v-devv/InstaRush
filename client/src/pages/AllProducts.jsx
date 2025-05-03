@@ -14,6 +14,8 @@ const AllProducts = () => {
         }
             
     } , [products , searchQuery])
+
+    console.log("filterProducts " , filterProducts)
   return (
     <div className='mt-16 flex flex-col'>
         <div className='flex flex-col items-end w-max'>
@@ -25,6 +27,7 @@ const AllProducts = () => {
                 <ProductCard key={i} product={product}  />
             ))}
         </div>
+        {filterProducts > 0 ? null : <div> No products found </div> }
     </div>
   )
 }
