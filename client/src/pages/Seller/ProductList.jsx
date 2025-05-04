@@ -1,21 +1,40 @@
 import toast from "react-hot-toast";
 import { useAppContext } from "../../context/AppContext";
-
+import { AiFillDelete } from "react-icons/ai";
 const ProductList = () => {
 
 
-    const {products , axios , fetchProducts } = useAppContext();
+    const { products, axios, fetchProducts } = useAppContext();
 
-    const toggleStock = async (id , inStock)=>{
+    const toggleStock = async (id, inStock) => {
         try {
-            const {data}  = await axios.put('/api/product/stock'  , {id , inStock});
+            const { data } = await axios.put('/api/product/stock', { id, inStock });
 
-            if(data.success){
+            if (data.success) {
                 fetchProducts();
                 toast.success(data.message)
-            }else{
+            } else {
                 toast.error(data.message)
                 console.log(data)
+            }
+        } catch (error) {
+            toast.error(error.message)
+        }
+    }
+    const deleteProduct = async (id) => {
+
+        try {
+            
+            const { data } = await axios.delete('/api/product/delete', {
+                data: {id}
+            });
+
+            if (data.success) {
+                fetchProducts();
+                toast.success(data.message)
+                
+            } else {
+                toast.error(data.message)
             }
         } catch (error) {
             toast.error(error.message)
@@ -34,6 +53,7 @@ const ProductList = () => {
                                 <th className="px-4 py-3 font-semibold truncate">Category</th>
                                 <th className="px-4 py-3 font-semibold truncate hidden md:block">Selling Price</th>
                                 <th className="px-4 py-3 font-semibold truncate">In Stock</th>
+                                <th className="px-4 py-3 font-semibold truncate">Delete Product</th>
                             </tr>
                         </thead>
                         <tbody className="text-sm text-gray-500">
@@ -49,11 +69,18 @@ const ProductList = () => {
                                     <td className="px-4 py-3 max-sm:hidden">₹{product.offerPrice}</td>
                                     <td className="px-4 py-3">
                                         <label className="relative inline-flex items-center cursor-pointer text-gray-900 gap-3">
-                                            <input  onClick={()=>toggleStock(product._id , !product.inStock)} checked={product.inStock} type="checkbox" className="sr-only peer"  />
+                                            <input
+                                                type="checkbox"
+                                                checked={product.inStock}
+                                                onChange={() => toggleStock(product._id, !product.inStock)}
+                                                className="sr-only peer"
+                                            />
+
                                             <div className="w-12 h-7 bg-slate-300 rounded-full peer peer-checked:bg-purple-600 transition-colors duration-200"></div>
                                             <span className="dot absolute left-1 top-1 w-5 h-5 bg-white rounded-full transition-transform duration-200 ease-in-out peer-checked:translate-x-5"></span>
                                         </label>
                                     </td>
+                                    <td className="px-4 py-3 text-center"><button onClick={() =>  {confirm("Are you sure for delete") &&   deleteProduct(product._id)}} className="cursor-pointer text-red-500"> <AiFillDelete className="w-5 h-5" /></button> </td>
                                 </tr>
                             ))}
                         </tbody>

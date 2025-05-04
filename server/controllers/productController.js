@@ -58,3 +58,18 @@ export const changeStock = async (req, res) => {
         res.status(500).json({success : false , message: error.message})
     }
 }
+//delete product
+export const deleteProduct = async (req , res)=>{
+    try {
+        const { id } = req.body;
+        const deletedProduct = await Product.findByIdAndDelete(id);
+
+        if (!deletedProduct) {
+            return res.status(404).json({ success:false, message: 'Product not found' });
+          }
+
+        res.status(200).json({deleteProduct , success:true , message: 'Product deleted successfully'})
+    } catch (error) {
+        res.status(500).json({ success:false, message: 'Server Error', error });
+    }
+}
