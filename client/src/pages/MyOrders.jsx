@@ -42,11 +42,11 @@ const MyOrders = () => {
                             <div className='flex items-center mb-4 md:mb-0'>
 
                                 <div className='bg-purple-500/10 p-4 rounded-lg'>
-                                    <img src={item.product.image[0]} className='w-16 h-16' alt="" />
+                                    <img src={item.product?.image[0]} className='w-16 h-16' alt="" />
                                 </div>
                                 <div className='ml-4 '>
-                                    <h2 className='text-xl font-medium text-gray-800'> {item.product.name} </h2>
-                                    <p>Category : {item.product.category} </p>
+                                    <h2 className='text-xl font-medium text-gray-800'> {item.product?.name} </h2>
+                                    <p>Category : {item.product?.category} </p>
                                 </div>
                             </div>
                             <div className='flex flex-col justify-center md:ml-8 mb-4 md:mb-0'>
@@ -55,7 +55,7 @@ const MyOrders = () => {
                                 <p>Date : {new Date(order.createdAt).toLocaleDateString()} </p>
                             </div>
                             <p className='text-purple-500 text-lg font-medium'>
-                                Amount : ₹{item.product.offerPrice * item.quantity}
+                                Amount : ₹{item.product?.offerPrice * item.quantity}
                             </p>
                         </div>
                     ))}
