@@ -13,7 +13,7 @@ const Login = () => {
 
     const onSubmitHandler = async (formData) => {
         try {
-            const { data } = await axios.post(`/api/user/${state}`, formData);
+            const { data } = await axios.post(`/api/user/${state}`, formData );
             console.log(data, "login  data");
 
             if (data.success) {
