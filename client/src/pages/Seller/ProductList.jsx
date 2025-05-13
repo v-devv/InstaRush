@@ -41,6 +41,13 @@ const ProductList = () => {
         }
     }
 
+    const editProduct = async ()=>{
+        try {
+            
+        } catch (error) {
+            
+        }
+    }
     return (
         <div className="no-scrollbar flex-1 h-[95vh] overflow-y-scroll flex flex-col justify-between">
             <div className="w-full md:p-10 p-4">
@@ -54,6 +61,7 @@ const ProductList = () => {
                                 <th className="px-4 py-3 font-semibold truncate hidden md:block">Selling Price</th>
                                 <th className="px-4 py-3 font-semibold truncate">In Stock</th>
                                 <th className="px-4 py-3 font-semibold truncate">Delete Product</th>
+                                <th className="px-4 py-3 font-semibold truncate">Edit Product</th>
                             </tr>
                         </thead>
                         <tbody className="text-sm text-gray-500">
@@ -81,6 +89,7 @@ const ProductList = () => {
                                         </label>
                                     </td>
                                     <td className="px-4 py-3 text-center"><button onClick={() =>  {confirm("Are you sure for delete") &&   deleteProduct(product._id)}} className="cursor-pointer text-red-500"> <AiFillDelete className="w-5 h-5" /></button> </td>
+                                    <td className="px-4 py-3 text-center"><button > <AiFillDelete className="w-5 h-5" /></button> </td>
                                 </tr>
                             ))}
                         </tbody>

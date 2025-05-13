@@ -73,3 +73,20 @@ export const deleteProduct = async (req , res)=>{
         res.status(500).json({ success:false, message: 'Server Error', error });
     }
 }
+
+// edit product 
+
+export const editProduct = async ( req , res)=>{
+    try {
+        const {id , ...updatedProduct } = req.body;
+        const editedProduct =await Product.findByIdAndUpdate(id , updatedProduct , {new:true});
+        if (!editedProduct) {
+            return res.status(404).json({ message: "Product not found" });
+          }
+      
+          res.status(200).json({ message: "Product updated", product: editedProduct });
+    } catch (error) {
+        console.error("Error updating product:", error);
+    res.status(500).json({ message: "Server error", error });
+    }
+}

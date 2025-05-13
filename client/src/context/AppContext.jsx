@@ -18,6 +18,15 @@ export const AppContextProvider = ({ children }) => {
     const [cartItems, setCartItems] = useState({});
     const [searchQuery, setSearchQuery] = useState({});
 
+    const [darkMode, setDarkMode] = useState(false);
+    useEffect(() => {
+      if (darkMode) {
+        document.documentElement.classList.add("dark");
+      } else {
+        document.documentElement.classList.remove("dark");
+      }
+    }, [darkMode]);
+
     //fetch seller status
     const fetchSeller = async()=>{
         try {
@@ -153,7 +162,7 @@ console.log(user , "user in context")
     } , [cartItems])
     const value = {axios, navigate, user, setUser, seller, setSeller  , showUserLogin, setShowUserLogin ,
          products, setProducts  , cartItems, setCartItems , addToCart , 
-         updateCartItems , removeFromCart , searchQuery, setSearchQuery , getCartAmount , getCartCount , fetchProducts};
+         updateCartItems , removeFromCart , searchQuery, setSearchQuery , getCartAmount , getCartCount , fetchProducts , darkMode , setDarkMode};
     return (
         <AppContext.Provider value={value}>
             {children}
