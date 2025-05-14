@@ -28,7 +28,7 @@ const Cart = () => {
     };
     const getUserAddress = async () => {
         try {
-            const { data } = await axios.get('/api/address/get', user._id  );
+            const { data } = await axios.get('/api/address/get', user._id);
             console.log("data in address", data)
             if (data.success) {
                 setAddresses(data.addresses)
@@ -66,27 +66,27 @@ const Cart = () => {
             toast.error(error.message)
         }
     }
-const deleteAddress = async (addressId) => {
-    try {
-        const { data } = await axios.put('/api/address/delete', { addressId });
-console.log(data, 'data in delete address')
-        if (data.success) {
-            toast.success(data.message);
+    const deleteAddress = async (addressId) => {
+        try {
+            const { data } = await axios.put('/api/address/delete', { addressId });
+            console.log(data, 'data in delete address')
+            if (data.success) {
+                toast.success(data.message);
 
-            // Filter out deleted addresses from API response
-            const activeAddresses = data.addresses.filter((address) => !address.deleted);
+                // Filter out deleted addresses from API response
+                const activeAddresses = data.addresses.filter((address) => !address.deleted);
 
-            // Update state with new addresses list
-            setAddresses(activeAddresses);
-            setSelectedAddress(null)
+                // Update state with new addresses list
 
-        } else {
-            toast.error(data.message);
+                setSelectedAddress(null)
+                setAddresses(prev => prev.filter(addr => addr._id !== addressId));
+            } else {
+                toast.error(data.message);
+            }
+        } catch (error) {
+            toast.error(error.message);
         }
-    } catch (error) {
-        toast.error(error.message);
-    }
-};
+    };
 
 
     useEffect(() => {
@@ -99,7 +99,7 @@ console.log(data, 'data in delete address')
         if (user) {
             getUserAddress();
         }
-    }, [user ])
+    }, [user])
     return products.length && cartItems ? (
         <div className="flex flex-col md:flex-row mt-16">
             <div className='flex-1 max-w-4xl'>
@@ -166,13 +166,13 @@ console.log(data, 'data in delete address')
                         {showAddress && (
                             <div className="absolute top-12 py-1 bg-white border border-gray-300 text-sm w-full">
                                 {addresses.map((address, i) => (
-                                   <div className="flex justify-between items-center" key={i}>
-                                    <p key={i} onClick={() => { setSelectedAddress(address); setShowAddress(false) }} className=" cursor-pointer text-gray-500 p-2 hover:bg-gray-100">
-                                        {address.street} , {address.city} , {address.state} , {address.country}
-                                    </p>
-                                    <button onClick={() => {confirm("Are you sure for delete address") && deleteAddress(address._id)} } className=" flex items-center text-red-500  pr-2 "> <AiFillDelete className="w-5 h-5 cursor-pointer" /> </button>
+                                    <div className="flex justify-between items-center" key={i}>
+                                        <p key={i} onClick={() => { setSelectedAddress(address); setShowAddress(false) }} className=" cursor-pointer text-gray-500 p-2 hover:bg-gray-100">
+                                            {address.street} , {address.city} , {address.state} , {address.country}
+                                        </p>
+                                        <button onClick={() => { confirm("Are you sure for delete address") && deleteAddress(address._id) }} className=" flex items-center text-red-500  pr-2 "> <AiFillDelete className="w-5 h-5 cursor-pointer" /> </button>
                                     </div>
-                                    
+
                                 ))}
                                 <p onClick={() => navigate('/add-address')} className="text-purple-500 text-center cursor-pointer p-2 hover:bg-purple-500/10">
                                     Add address
