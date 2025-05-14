@@ -1,15 +1,15 @@
 import mongoose from "mongoose";
 
 const addressSchema = new mongoose.Schema({
-    userID :{
+    userID: {
         type: String,
         required: true,
     },
-    firstName : {
+    firstName: {
         type: String,
         required: true,
     },
-    lastName : {
+    lastName: {
         type: String,
         required: true,
     },
@@ -17,10 +17,10 @@ const addressSchema = new mongoose.Schema({
         type: String,
         required: true,
     },
-    street : {
+    street: {
         type: String,
         required: true,
-    },city: {
+    }, city: {
         type: String,
         required: true,
     },
@@ -35,10 +35,15 @@ const addressSchema = new mongoose.Schema({
     county: {
         type: String,
         required: true,
-    },phone:{
+    }, phone: {
         type: String,
         required: true,
+    },
+    deleted: {
+        type: Boolean,
+        default: false
     }
+
 })
 
 const Address = mongoose.models.address || mongoose.model('address', addressSchema);

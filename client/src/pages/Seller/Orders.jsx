@@ -46,13 +46,13 @@ const Orders = () => {
                     </div>
 
                     <div className="text-sm md:text-base text-black/60  ">
-                        <p className='text-black/80 '>{order.address.firstName} {order.address.lastName}</p>
-                        <p>{order.address.street}, {order.address.city}</p> <p> {order.address.state}, {order.address.zipcode}, {order.address.country}</p>
+                        <p className='text-black/80 '>{order.address?.firstName} {order.address?.lastName}</p>
+                        <p>{order.address?.street}, {order.address?.city}</p> <p> {order.address?.state}, {order.address?.zipcode}, {order.address?.country}</p>
                         <p></p>
-                        <p>{order.address.phone} </p>
+                        <p>{order.address?.phone} </p>
                     </div>
 
-                    <p className="font-medium text-lg my-auto ">₹{order.amount}</p>
+                    <p className="font-medium text-lg my-auto ">₹{order?.amount}</p>
 
                     <div className="flex flex-col text-sm md:text-base text-black/60">
                         <p>Method: {order.paymentType}</p>

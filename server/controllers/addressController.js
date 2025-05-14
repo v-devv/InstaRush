@@ -20,14 +20,28 @@ export const addAddress = async (req, res) => {
 export const getAddress =async (req, res) => {
     try {
         const {userId} = req.userId;
-        const addresses = await Address.find({userId});
+        const addresses = await Address.find({userId , deleted: { $ne: true }});
         if (!addresses) {
-            return res.status(201).json({ message: 'No addresses found' });
+            return res.status(400).json({ message: 'No addresses found' });
         }
         res.status(200).json({success:true,  addresses});
     } catch (error) {
         console.error(error);
         res.status(500).json({ message: 'Internal server error' });
+        
+    }
+}
+
+export const deleteAddress = async(req , res)=>{
+    try {
+        const {addressId} = req.body;
+        const address = await Address.findByIdAndUpdate(addressId , {deleted: true});
+        if(!address){
+            return res.status(400).json({ message: 'Address not found' });
+        }
+        console.log(address , 'address');
+        res.status(200).json({success:true, addresses: [address], message: 'Address deleted successfully'});
+    } catch (error) {
         
     }
 }
