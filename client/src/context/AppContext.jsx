@@ -46,6 +46,7 @@ export const AppContextProvider = ({ children }) => {
             const {data} = await axios.get('/api/user/is-auth' )
             console.log(data  , "data iin user")
             if(data.success){ 
+                console.log(data.user , "user in context")
                 setUser(data.user)
                 setCartItems(data.user.cartItems)
             }
@@ -54,7 +55,7 @@ export const AppContextProvider = ({ children }) => {
             setUser(null)
         } 
     }
-console.log(user , "user in context")
+
 
 
 

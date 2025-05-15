@@ -6,7 +6,7 @@ import Address from "../models/Address.js";
 export const addAddress = async (req, res) => {
     try {
         const {address , userId} = req.body;
-        await Address.create({...address ,  userID: userId});
+        await Address.create({...address ,  userId: userId});
         res.status(201).json({success:true, message: 'Address added successfully'});
 
     } catch (error) {
@@ -19,8 +19,10 @@ export const addAddress = async (req, res) => {
 // Address Controller : /api/address/get
 export const getAddress =async (req, res) => {
     try {
-        const {userId} = req.userId;
+        const userId = req.userId;
         const addresses = await Address.find({userId , deleted: { $ne: true }});
+        console.log(addresses , 'addresses');
+        console.log(userId , 'userId');
         if (!addresses) {
             return res.status(400).json({ message: 'No addresses found' });
         }

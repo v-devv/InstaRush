@@ -28,8 +28,9 @@ const Cart = () => {
     };
     const getUserAddress = async () => {
         try {
-            const { data } = await axios.get('/api/address/get', user._id);
+            const { data } = await axios.get('/api/address/get', {userId:user._id});
             console.log("data in address", data)
+            console.log("data in address", user._id)
             if (data.success) {
                 setAddresses(data.addresses)
                 if (data.addresses.length > 0) {
@@ -48,6 +49,7 @@ const Cart = () => {
                 return toast.error("Please select an address")
             }
             if (paymentOption === "COD") {
+                console.log("userid in", user._id)
                 const { data } = await axios.post('/api/order/cod', {
                     userId: user._id,
                     items: cartArray.map(item => ({ product: item._id, quantity: item.quantity })),

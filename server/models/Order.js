@@ -3,21 +3,21 @@ import mongoose from "mongoose";
 
 const orderSchema = new mongoose.Schema({
     userId :{
-        type: String , 
-        require : true,
+        type: mongoose.Schema.Types.ObjectId , 
+        required : true,
         ref:"user"
     },
     items:[
         {
-            product : { type : String , require : true , ref: 'product'},
-            quantity : { type : String , require : true }
+            product : { type : String , required : true , ref: 'product'},
+            quantity : { type : String , required : true }
         }
     ],
-    amount : {type : Number , require : true },
-    address : { type : String , require : true  , ref:'address'},
-    status:{type : String , require : true  ,default: 'Order Placed'},
-    paymentType : {type : String , require : true },
-    isPaid : {type : String , require : true  ,default:false},
+    amount : {type : Number , required : true },
+    address : { type : String , required : true  , ref:'address'},
+    status:{type : String , required : true  ,default: 'Order Placed'},
+    paymentType : {type : String , required : true },
+    isPaid : {type : String , required : true  ,default:false},
 
 } , {timestamps:true});
 

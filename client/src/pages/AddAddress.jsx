@@ -22,6 +22,8 @@ const AddAddress = () => {
   const { axios, user, navigate } = useAppContext();
   const { register, handleSubmit, formState: { errors } } = useForm()
   const onSubmit = async (data) => {
+      console.log("Submitting address for user:", user);
+
     try {
       const res  = await axios.post('/api/address/add', { address : data, userId: user._id, });
       if (res.data.success) {
@@ -30,9 +32,11 @@ const AddAddress = () => {
       } else {
         toast.error(res.data.message);
       }
-    } catch (error) {
-      toast.error(error.message);
-    }
+    }catch (error) {
+  console.error("Error submitting address:", error.response?.data || error.message);
+  toast.error(error.response?.data?.message || error.message);
+}
+
   }
   const noOnlySpaces = (fieldName) => (val) =>
   val.trim() !== '' || `${fieldName} cannot contain only spaces`;

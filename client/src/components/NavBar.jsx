@@ -23,6 +23,7 @@ const NavBar = () => {
             toast.error(error.message)
         }
     }
+    
     useEffect(() => {
         if (searchQuery.length > 0) {
             navigate('/products')
@@ -55,6 +56,7 @@ const NavBar = () => {
                 >
                     Seller
                 </span>
+                <span> {user?.name} </span>
 
 
 
