@@ -56,7 +56,7 @@ const NavBar = () => {
                 >
                     Seller
                 </span>
-                <span> {user?.name} </span>
+                <span >Welcome ,<p className='font-semibold'> {user?.name?.split(" ")[0]}</p></span>
 
 
 

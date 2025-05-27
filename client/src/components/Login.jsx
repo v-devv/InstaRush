@@ -22,6 +22,7 @@ const Login = () => {
                 setShowUserLogin(false);
                 toast.success(data.message);
                 reset();
+                window.location.reload();
             } else {
                 //  Show field-specific error for email
                 if (state === "register" && data.message === "User already exists") {

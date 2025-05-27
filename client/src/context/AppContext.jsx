@@ -16,6 +16,7 @@ export const AppContextProvider = ({ children }) => {
     const [products, setProducts] = useState([]);
     const [cartItems, setCartItems] = useState({});
     const [searchQuery, setSearchQuery] = useState({});
+    const [loadingUser, setLoadingUser] = useState(true);
 
     const [darkMode, setDarkMode] = useState(false);
     useEffect(() => {
@@ -38,7 +39,9 @@ export const AppContextProvider = ({ children }) => {
             }
         } catch (error) {
             setSeller(false)
-        }
+        }finally {
+    setLoadingUser(false); 
+  }
     }
     //fetch user status , cart items
     const fetchUser = async ()=>{
@@ -162,7 +165,7 @@ export const AppContextProvider = ({ children }) => {
     } , [cartItems])
     const value = {axios, navigate, user, setUser, seller, setSeller  , showUserLogin, setShowUserLogin ,
          products, setProducts  , cartItems, setCartItems , addToCart , 
-         updateCartItems , removeFromCart , searchQuery, setSearchQuery , getCartAmount , getCartCount , fetchProducts , darkMode , setDarkMode};
+         updateCartItems , removeFromCart , searchQuery, setSearchQuery , getCartAmount ,  fetchUser, getCartCount , fetchProducts , darkMode , setDarkMode ,  loadingUser};
     return (
         <AppContext.Provider value={value}>
             {children}
