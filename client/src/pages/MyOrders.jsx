@@ -31,7 +31,9 @@ const MyOrders = () => {
                 <p className='text-2xl font-medium uppercase'> My Orders</p>
                 <div className='w-16 h-0.5 bg-purple-500 rounded-full'></div>
             </div>
-            {myOrders.map((order , i)=>(
+            {myOrders.length > 0 ? (
+                <div>
+                    {myOrders.map((order , i)=>(
                 <div key={i} className='border border-gray-300 rounded-lg mb-10 p-4 py-5 max-w-4xl'>
                     <p className='flex justify-between md:items-center text-gray-400 md:font-medium max-md:flex-col'>
                         <span>OrderId : {order._id} </span>
@@ -62,6 +64,10 @@ const MyOrders = () => {
                     ))}
                 </div>    
             ))}
+                     </div>
+            ): <div className='flex items-center justify-center h-[30vh]'>
+                <p className='text-2xl font-medium text-gray-500'>You have no orders yet.</p>
+                </div>}
     </div>
   )
 }
