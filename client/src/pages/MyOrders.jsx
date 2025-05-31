@@ -33,13 +33,12 @@ const MyOrders = () => {
                 <div className='w-16 h-0.5 bg-purple-500 rounded-full'></div>
             </div>
             {loading && (
-                <div className='flex items-center justify-center h-[30vh]'>
-                    <div class="flex justify-center items-center h-screen">
-                        <div class="relative w-16 h-16 border-4 border-blue-500 rounded-full animate-spin">
-                            <div class="absolute top-2 left-2 w-12 h-12 border-4 border-red-500 rounded-full animate-spin-reverse"></div>
-                        </div>
+                <div className="flex items-center justify-center h-[30vh]">
+                    <div className="relative w-10 h-10 sm:w-16 sm:h-16 border-4 border-blue-500 rounded-full animate-spin">
+                        <div className="absolute top-1.5 left-1.5 w-7 h-7 sm:w-12 sm:h-12 border-4 border-red-500 rounded-full animate-spin-reverse"></div>
                     </div>
                 </div>
+
 
             )}
             {myOrders.length > 0 ? (
