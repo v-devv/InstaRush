@@ -29,7 +29,7 @@ const Cart = () => {
     };
     const getUserAddress = async () => {
         try {
-            const { data } = await axios.get('/api/address/get', {userId:user._id});
+            const { data } = await axios.get('/api/address/get', { userId: user._id });
             console.log("data in address", data)
             console.log("data in address", user._id)
             if (data.success) {
@@ -77,12 +77,6 @@ const Cart = () => {
             console.log(data, 'data in delete address')
             if (data.success) {
                 toast.success(data.message);
-
-                // Filter out deleted addresses from API response
-                const activeAddresses = data.addresses.filter((address) => !address.deleted);
-
-                // Update state with new addresses list
-
                 setSelectedAddress(null)
                 setAddresses(prev => prev.filter(addr => addr._id !== addressId));
             } else {
@@ -106,8 +100,16 @@ const Cart = () => {
         }
     }, [user])
     return products.length && cartItems ? (
-        <div className="flex flex-col md:flex-row mt-16">
-            <div className='flex-1 max-w-4xl'>
+
+        <div >
+    {loading ? (
+  <div className="flex flex-col items-center justify-center h-[50vh]">
+    <div className="loader mb-4"></div>
+    <h1 className="text-xl font-semibold text-gray-700">Processing your grocery order...</h1>
+  </div>
+) : (
+    <div className="flex flex-col md:flex-row mt-16">
+         <div className='flex-1 max-w-4xl'>
                 <h1 className="text-3xl font-medium mb-6">
                     Shopping Cart <span className="text-sm text-purple-500"> {getCartCount()} Items</span>
                 </h1>
@@ -187,7 +189,7 @@ const Cart = () => {
                     </div>
 
                     <p className="text-sm font-medium uppercase mt-6">Payment Method</p>
-                  
+
                     <select onChange={(e) => setPaymentOption(e.target.value)} className="w-full border border-gray-300 bg-white px-3 py-2 mt-2 outline-none">
                         <option value="COD">Cash On Delivery</option>
                         <option value="Online">Online Payment</option>
@@ -217,6 +219,11 @@ const Cart = () => {
                     }
                 </button>
             </div>
+    </div>
+) }
+
+
+           
         </div>
     ) : null
 }
