@@ -14,6 +14,7 @@ const Cart = () => {
     const [showAddress, setShowAddress] = useState(false);
     const [selectedAddress, setSelectedAddress] = useState(null)
     const [paymentOption, setPaymentOption] = useState("COD")
+    const [loading, setLoading] = useState(false);
 
     const getCart = () => {
         let tempArray = [];
@@ -50,11 +51,13 @@ const Cart = () => {
             }
             if (paymentOption === "COD") {
                 console.log("userid in", user._id)
+                setLoading(true);
                 const { data } = await axios.post('/api/order/cod', {
                     userId: user._id,
                     items: cartArray.map(item => ({ product: item._id, quantity: item.quantity })),
                     address: selectedAddress._id
                 });
+                setLoading(false);
 
                 if (data.success) {
                     toast.success(data.message)
@@ -184,7 +187,7 @@ const Cart = () => {
                     </div>
 
                     <p className="text-sm font-medium uppercase mt-6">Payment Method</p>
-                    {/*  <button onClick={()=>testApi()}> test</button> */}
+                  
                     <select onChange={(e) => setPaymentOption(e.target.value)} className="w-full border border-gray-300 bg-white px-3 py-2 mt-2 outline-none">
                         <option value="COD">Cash On Delivery</option>
                         <option value="Online">Online Payment</option>
