@@ -6,7 +6,16 @@ export default {
       "./src/**/*.{js,ts,jsx,tsx}",
     ],
     theme: {
-      extend: {},
+      extend: {
+          colors: {
+        primaryBlue: '#187CFA',
+        primaryPink: '#D210B0',
+        primaryPurple: '#604AE9',
+      },
+      backgroundImage: {
+        'loaderColor' : 'linear-gradient(to right, #187CFA, #D210B0, #604AE9)' ,
+      }
+      },
     },
     plugins: [],
   }
