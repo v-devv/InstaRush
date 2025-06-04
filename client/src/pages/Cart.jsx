@@ -213,7 +213,7 @@ const Cart = () => {
                     </p>
                 </div>
 
-                <button onClick={placeOrder} className="w-full py-3 mt-6 cursor-pointer bg-purple-500 text-white font-medium hover:bg-purple-600 transition">
+                <button onClick={()=>{scrollTo(0,0) ; placeOrder()}} className="w-full py-3 mt-6 cursor-pointer bg-purple-500 text-white font-medium hover:bg-purple-600 transition">
                     {
                         paymentOption === "COD" ? "Place Order" : "Proceed to Checkout"
                     }
