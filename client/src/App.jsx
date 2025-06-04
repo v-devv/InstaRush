@@ -17,6 +17,7 @@ import SellerLayout from './pages/Seller/SellerLayout';
 import AddProduct from './pages/Seller/AddProduct';
 import ProductList from './pages/Seller/ProductList';
 import Orders from './pages/Seller/Orders';
+import ScrollToTop from './context/ScrollToTop';
 
 
 const App = () => {
@@ -28,7 +29,8 @@ const App = () => {
       {}
       {showUserLogin ?<Login /> : null}
       <Toaster />
-      <div className={`${isSellerpath ? '' :'px-6 md:px-16 lg:px-24 xl:px-32'}`}>
+      <div className={`${isSellerpath ? '' :'px-6 md:px-16 lg:px-24 xl:px-32 mt-30'}`}>
+          <ScrollToTop />
         <Routes>
           <Route path="/" element={<Home />} />
           <Route path="/products" element={<AllProducts />} />

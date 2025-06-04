@@ -30,7 +30,8 @@ const NavBar = () => {
         }
     }, [searchQuery])
     return (
-        <nav className='flex rounded items-center justify-between px-6 md:px-16 lg:px-24 xl:px-32 py-4 border-b border-gray-300 bg-white relative transition-all '>
+        <nav className='fixed top-0 left-0 w-full z-50 flex rounded items-center justify-between px-6 md:px-16 lg:px-24 xl:px-32 py-4 border-b border-gray-300 bg-white shadow transition-all'>
+
             <NavLink to="/" onClick={() => setOpen(false)}> <h1 className='text-2xl md:text-3xl font-bold group'>
                 <span  style={{background:' linear-gradient(to right, #187CFA, #D210B0, #604AE9)'}} className='rounded' >
                 <span className='text-white group-hover:scale-108 transition-transform duration-300 inline-block px-1.5 py-1'>

@@ -30,6 +30,9 @@ const ProductDetails = () => {
     useEffect(()=>{
         setThumbnail(product?.image[0] ? product.image[0] : null )
     } , [product])
+    useEffect(() => {
+  window.scrollTo(0, 0);
+}, [id]);
 
     return product && (
         <div className="mt-12">
