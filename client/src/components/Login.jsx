@@ -9,11 +9,11 @@ const Login = () => {
 
     const [state, setState] = useState("login");
 
-    const { register, handleSubmit, reset,control, setError, formState: { errors } } = useForm();
+    const { register, handleSubmit, reset, control, setError, formState: { errors } } = useForm();
 
     const onSubmitHandler = async (formData) => {
         try {
-            const { data } = await axios.post(`/api/user/${state}`, formData );
+            const { data } = await axios.post(`/api/user/${state}`, formData);
             console.log(data, "login  data");
 
             if (data.success) {
@@ -31,7 +31,7 @@ const Login = () => {
                         message: "Email already exists",
                     });
                 } else if (state === "login" && data.message === "Invalid credentials") {
-                    setError('password' , {
+                    setError('password', {
                         type: "manual",
                         message: "Invalid email or password",
                     })
@@ -39,30 +39,30 @@ const Login = () => {
             }
         } catch (error) {
             // In case of server error
-            toast.error(error.message );
+            toast.error(error.message);
         }
     };
     const {
-  field: passwordField,
-} = useController({
-  name: "password",
-  control,
-  rules: state === "register"
-    ? {
-        required: "Password is required",
-        pattern: {
-          value: /^(?=.*[a-z])(?=.*[A-Z])(?=.*\d)(?=.*[\W_]).{8,}$/,
-          message:
-            "Password must be at least 8 characters and include upper, lower, number, special character",
-        },
-      }
-    : {
-        required: "Password is required",
-      },
-});
+        field: passwordField,
+    } = useController({
+        name: "password",
+        control,
+        rules: state === "register"
+            ? {
+                required: "Password is required",
+                pattern: {
+                    value: /^(?=.*[a-z])(?=.*[A-Z])(?=.*\d)(?=.*[\W_]).{8,}$/,
+                    message:
+                        "Password must be at least 8 characters and include upper, lower, number, special character",
+                },
+            }
+            : {
+                required: "Password is required",
+            },
+    });
     useEffect(() => {
-  reset(); // Clears field values and errors when switching state
-}, [state]);
+        reset(); // Clears field values and errors when switching state
+    }, [state]);
 
     return (
         <div onClick={() => setShowUserLogin(false)} className="fixed top-0 bottom-0 left-0 right-0 z-30 flex items-center text-sm text-gray-600 bg-black/50">
@@ -90,7 +90,7 @@ const Login = () => {
                 <div className="w-full ">
                     <p>Password</p>
                     <input
-                         {...passwordField}
+                        {...passwordField}
                         autoComplete={state === "login" ? "current-password" : "new-password"}
                         placeholder="type here"
                         className="border border-gray-200 rounded w-full p-2 mt-1 outline-purple-500"

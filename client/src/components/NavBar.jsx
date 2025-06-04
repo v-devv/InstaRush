@@ -1,4 +1,4 @@
-import React, { use, useEffect, useState } from 'react'
+import React, { useRef, useEffect, useState } from 'react'
 import { NavLink } from 'react-router-dom'
 import { assets } from '../assets/assets'
 import { CiShoppingCart } from "react-icons/ci";
@@ -10,6 +10,7 @@ import toast from 'react-hot-toast';
 
 const NavBar = () => {
     const [open, setOpen] = useState(false);
+    const menuRef = useRef(null);
     const { user, setUser, setShowUserLogin, seller, navigate, axios, setSearchQuery, searchQuery, getCartCount, setDarkMode, darkMode } = useAppContext();
     const logout = async () => {
         try {
@@ -23,12 +24,33 @@ const NavBar = () => {
             toast.error(error.message)
         }
     }
+  useEffect(() => {
+    const handleClickOutside = (e) => {
+      if (menuRef.current && !menuRef.current.contains(e.target)) {
+        setOpen(false);
+      }
+    };
 
+    const handleScroll = () => {
+      setOpen(false);
+    };
+
+    if (open) {
+      document.addEventListener('mousedown', handleClickOutside);
+      window.addEventListener('scroll', handleScroll);
+    }
+
+    return () => {
+      document.removeEventListener('mousedown', handleClickOutside);
+      window.removeEventListener('scroll', handleScroll);
+    };
+  }, [open]);
     useEffect(() => {
         if (searchQuery.length > 0) {
             navigate('/products')
         }
     }, [searchQuery])
+
     return (
         <nav className='fixed top-0 left-0 w-full z-50 flex rounded items-center justify-between px-6 md:px-16 lg:px-24 xl:px-32 py-4 border-b border-gray-300 bg-white shadow transition-all'>
 
@@ -100,7 +122,7 @@ const NavBar = () => {
             </div>
 
             {open && (
-                <div className={`transition-all duration-300 ease-in-out transform 
+                <div ref={menuRef} className={`transition-all duration-300 ease-in-out transform 
                     ${open ? 'flex translate-y-0 opacity-100' : '-translate-y-5 opacity-0 pointer-events-none'} 
                     absolute top-[60px] left-0 z-10 w-full bg-white shadow-md py-4 flex-col items-start gap-2 px-5 text-sm sm:hidden`}>
                     <NavLink to="/" onClick={() => setOpen(false)} >Home</NavLink>
