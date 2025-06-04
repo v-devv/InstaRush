@@ -6,6 +6,7 @@ import { useController, useForm } from "react-hook-form";
 
 const Login = () => {
     const { setShowUserLogin, setUser, axios, navigate } = useAppContext()
+    const [loading, setLoading] = useState(false);
 
     const [state, setState] = useState("login");
 
@@ -13,7 +14,10 @@ const Login = () => {
 
     const onSubmitHandler = async (formData) => {
         try {
+            setLoading(true);
             const { data } = await axios.post(`/api/user/${state}`, formData);
+            setLoading(false);
+            
             console.log(data, "login  data");
 
             if (data.success) {
@@ -112,7 +116,8 @@ const Login = () => {
                     </p>
                 )}
                 <button className="bg-purple-500 hover:bg-purple-600 transition-all text-white w-full py-2 rounded-md cursor-pointer">
-                    {state === "register" ? "Create Account" : "Login"}
+               
+                    {state === "register" ? "Create Account" : "Login" && loading ? "Loading..." : "Login"}
                 </button>
             </form>
         </div>
