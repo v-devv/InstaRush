@@ -87,7 +87,14 @@ const Cart = () => {
         }
     };
 
-
+    const addAddress = ()=>{
+        if(user){
+            navigate('/add-address')
+        }else{
+            toast.error("Please login to add address")
+        }
+        console.log("add address clicked")
+    }
     useEffect(() => {
         if (products.length > 0 && cartItems) {
             getCart();
@@ -181,7 +188,7 @@ const Cart = () => {
                                     </div>
 
                                 ))}
-                                <p onClick={() => navigate('/add-address')} className="text-purple-500 text-center cursor-pointer p-2 hover:bg-purple-500/10">
+                                <p onClick={addAddress} className="text-purple-500 text-center cursor-pointer p-2 hover:bg-purple-500/10">
                                     Add address
                                 </p>
                             </div>
