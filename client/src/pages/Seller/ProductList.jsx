@@ -56,11 +56,11 @@ const ProductList = () => {
                     <table className="md:table-auto table-fixed w-full overflow-hidden">
                         <thead className="text-gray-900 text-sm text-left">
                             <tr>
-                                <th className="px-4 py-3 font-semibold truncate">Product</th>
-                                <th className="px-4 py-3 font-semibold truncate">Category</th>
-                                <th className="px-4 py-3 font-semibold truncate hidden md:block">Selling Price</th>
-                                <th className="px-4 py-3 font-semibold truncate">In Stock</th>
-                                <th className="px-4 py-3 font-semibold truncate">Delete Product</th>
+                                <th className="px-4 py-3 font-semibold truncate text-center">Product</th>
+                                <th className="px-4 py-3 font-semibold truncate text-center">Category</th>
+                                <th className="px-4 py-3 font-semibold truncate text-center hidden md:block">Selling Price</th>
+                                <th className="px-4 py-3 font-semibold truncate text-center">In Stock</th>
+                                <th className="px-4 py-3 font-semibold truncate text-center">Delete Product</th>
                                 {/*   <th className="px-4 py-3 font-semibold truncate">Edit Product</th> */}
                             </tr>
                         </thead>
@@ -73,9 +73,9 @@ const ProductList = () => {
                                         </div>
                                         <span className="truncate max-sm:hidden w-full">{product.name}</span>
                                     </td>
-                                    <td className="px-4 py-3">{product.category}</td>
-                                    <td className="px-4 py-3 max-sm:hidden">₹{product.offerPrice}</td>
-                                    <td className="px-4 py-3">
+                                    <td className="px-4 py-3 text-center">{product.category}</td>
+                                    <td className="px-4 py-3 text-center max-sm:hidden">₹{product.offerPrice}</td>
+                                    <td className="px-4 py-3 text-center">
                                         <label className="relative inline-flex items-center cursor-pointer text-gray-900 gap-3">
                                             <input
                                                 type="checkbox"
