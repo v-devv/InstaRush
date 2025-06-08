@@ -24,15 +24,15 @@ const ProductList = () => {
     const deleteProduct = async (id) => {
 
         try {
-            
+
             const { data } = await axios.delete('/api/product/delete', {
-                data: {id}
+                data: { id }
             });
 
             if (data.success) {
                 fetchProducts();
                 toast.success(data.message)
-                
+
             } else {
                 toast.error(data.message)
             }
@@ -41,13 +41,13 @@ const ProductList = () => {
         }
     }
 
-    const editProduct = async ()=>{
-        try {
-            
-        } catch (error) {
-            
-        }
-    }
+    /*   const editProduct = async ()=>{
+          try {
+              
+          } catch (error) {
+              
+          }
+      } */
     return (
         <div className="no-scrollbar flex-1 h-[95vh] overflow-y-scroll flex flex-col justify-between">
             <div className="w-full md:p-10 p-4">
@@ -61,7 +61,7 @@ const ProductList = () => {
                                 <th className="px-4 py-3 font-semibold truncate hidden md:block">Selling Price</th>
                                 <th className="px-4 py-3 font-semibold truncate">In Stock</th>
                                 <th className="px-4 py-3 font-semibold truncate">Delete Product</th>
-                                <th className="px-4 py-3 font-semibold truncate">Edit Product</th>
+                                {/*   <th className="px-4 py-3 font-semibold truncate">Edit Product</th> */}
                             </tr>
                         </thead>
                         <tbody className="text-sm text-gray-500">
@@ -83,13 +83,12 @@ const ProductList = () => {
                                                 onChange={() => toggleStock(product._id, !product.inStock)}
                                                 className="sr-only peer"
                                             />
-
-                                            <div className="w-12 h-7 bg-slate-300 rounded-full peer peer-checked:bg-purple-600 transition-colors duration-200"></div>
-                                            <span className="dot absolute left-1 top-1 w-5 h-5 bg-white rounded-full transition-transform duration-200 ease-in-out peer-checked:translate-x-5"></span>
+                                            <div className="w-10 h-6 sm:w-12 sm:h-7 bg-slate-300 rounded-full peer peer-checked:bg-purple-600 transition-colors duration-200"></div>
+                                            <span className="dot absolute left-1 top-1 w-4 h-4 sm:w-5 sm:h-5 bg-white rounded-full transition-transform duration-200 ease-in-out peer-checked:translate-x-4 sm:peer-checked:translate-x-5"></span>
                                         </label>
                                     </td>
-                                    <td className="px-4 py-3 text-center"><button onClick={() =>  {confirm("Are you sure for delete") &&   deleteProduct(product._id)}} className="cursor-pointer text-red-500"> <AiFillDelete className="w-5 h-5" /></button> </td>
-                                    <td className="px-4 py-3 text-center"><button > <AiFillDelete className="w-5 h-5" /></button> </td>
+                                    <td className="px-4 py-3 text-center"><button onClick={() => { confirm("Are you sure for delete") && deleteProduct(product._id) }} className="cursor-pointer text-red-500"> <AiFillDelete className="w-5 h-5" /></button> </td>
+                                    {/*              <td className="px-4 py-3 text-center"><button > <AiFillDelete className="w-5 h-5" /></button> </td> */}
                                 </tr>
                             ))}
                         </tbody>
