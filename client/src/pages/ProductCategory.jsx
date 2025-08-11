@@ -3,11 +3,20 @@ import { useAppContext } from '../context/AppContext'
 import { useParams } from 'react-router-dom';
 import { categories } from '../assets/assets';
 import ProductCard from '../components/ProductCard';
+import PageNotFound from '../components/PageNotFound/PageNotFound';
 
 const ProductCategory = ( ) => {
     const {products} = useAppContext();
     const {category} = useParams();
+    console.log("product", products)
+      // Validate category
+
     const searchCategory = categories.find((item)=>item.path.toLowerCase()===category);
+    if(!searchCategory) {
+        return <PageNotFound />
+    }
+      // Filter products
+
     const filterProducts = products.filter((product)=> product.category.toLowerCase() === category);
     const inStockProducts = filterProducts.filter((item) => item.inStock);
     console.log("filterProducts " , filterProducts)

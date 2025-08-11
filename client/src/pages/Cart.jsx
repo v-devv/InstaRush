@@ -2,6 +2,7 @@ import { useEffect, useState } from "react";
 import { useAppContext } from "../context/AppContext";
 import { AiFillDelete } from "react-icons/ai";
 import toast from "react-hot-toast";
+import { toast as notify } from 'react-toastify';
 
 const Cart = () => {
     const { products, user, cartItems,
@@ -46,6 +47,9 @@ const Cart = () => {
     }
     const placeOrder = async () => {
         try {
+            if(!user){
+                return toast.error("Please login to place order")
+            }
             if (!selectedAddress) {
                 return toast.error("Please select an address")
             }
@@ -66,6 +70,9 @@ const Cart = () => {
                 } else {
                     toast.error(data.message)
                 }
+            }
+            else {
+                notify.error("Online payment is not implemented yet")
             }
         } catch (error) {
             toast.error(error.message)

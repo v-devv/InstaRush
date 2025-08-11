@@ -18,18 +18,21 @@ import AddProduct from './pages/Seller/AddProduct';
 import ProductList from './pages/Seller/ProductList';
 import Orders from './pages/Seller/Orders';
 import ScrollToTop from './context/ScrollToTop';
+import PageNotFound from './components/PageNotFound/PageNotFound';
+import { ToastContainer, toast } from 'react-toastify';
 
 
 const App = () => {
-  const isSellerpath = useLocation().pathname.includes('seller');
+  const isSellerPath = useLocation().pathname.includes('seller');
   const {showUserLogin , seller} = useAppContext();
   return (
     <div className='text-default min-h-screen text-gray-700 bg-white'>
-      {isSellerpath ? '' : <NavBar />}
+      {isSellerPath ? '' : <NavBar />}
       {}
       {showUserLogin ?<Login /> : null}
       <Toaster />
-      <div className={`${isSellerpath ? '' :'px-6 md:px-16 lg:px-24 xl:px-32 mt-30'}`}>
+      <ToastContainer />
+      <div className={`${isSellerPath ? '' :'px-6 md:px-16 lg:px-24 xl:px-32 mt-30'}`}>
           <ScrollToTop />
         <Routes>
           <Route path="/" element={<Home />} />
@@ -44,8 +47,9 @@ const App = () => {
             <Route path='product-list' element= {<ProductList /> } />
             <Route path='orders' element= {<Orders /> } />
           </Route>
+          <Route path='*' element={<PageNotFound />} />
         </Routes>
-        {!isSellerpath && <Footer />}
+        {!isSellerPath && <Footer />}
       </div>
     </div>
   )
