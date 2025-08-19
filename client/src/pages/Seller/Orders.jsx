@@ -6,10 +6,13 @@ import { useAppContext } from "../../context/AppContext";
 const Orders = () => {
     const [orders , setOrders ] = useState([]);
     const {axios} =useAppContext()
+    const [loading, setLoading] = useState(false);
 
     const fetchOrders = async()=>{
         try {
+            setLoading(true);
             const {data} = await axios.get('/api/order/get-all-orders');
+            setLoading(false);
             if(data.success){
                 setOrders(data.orders)
             }else{
@@ -27,6 +30,15 @@ const Orders = () => {
 
     return (
         <div className="no-scrollbar flex-1 h-[95vh] overflow-y-scroll">
+            {loading ? (
+                <div className="flex items-center justify-center h-[95vh] w-full">
+                    <div className="flex flex-col items-center">
+                        <div className="loader mb-4"></div>
+                        <h1 className="text-xl font-semibold text-gray-700">Loading Orders...</h1>
+                    </div>
+                </div>
+            ) : (
+                 <div >
         <div className="md:p-10 p-4 space-y-4">
             <h2 className="text-lg font-medium">Orders List</h2>
             {orders.map((order, index) => (
@@ -63,6 +75,9 @@ const Orders = () => {
             ))}
         </div>
         </div>
+            )}
+        </div>
+       
     )
 }
 export default Orders;
