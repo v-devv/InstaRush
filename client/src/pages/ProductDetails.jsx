@@ -1,4 +1,4 @@
-import { useEffect, useState  } from "react";
+import { useEffect, useState } from "react";
 import { useAppContext } from "../context/AppContext";
 import { Link, useParams } from "react-router-dom";
 import ProductCard from "../components/ProductCard";
@@ -8,31 +8,41 @@ import { CiStar } from "react-icons/ci";
 
 const ProductDetails = () => {
 
-    const { products , navigate ,addToCart } = useAppContext();
-    const { id} = useParams();
-    const [ relatedProducts , setRelatedProducts] = useState([])
+    const { products, navigate, addToCart } = useAppContext();
+    const { id } = useParams();
+    const [relatedProducts, setRelatedProducts] = useState([])
     const [thumbnail, setThumbnail] = useState();
+    const [added, setAdded] = useState(false);
 
 
-    const product = products.find((item)=>item._id===id);
-    console.log("product" , product)
-    useEffect((()=>{
-        
-        if(products.length >0){
-            let productCopy = products.slice();
-            console.log("productCopy" , productCopy)
-            productCopy = productCopy.filter((item)=>product.category === item.category)
-            console.log("productCopy" , productCopy)
-            setRelatedProducts(productCopy.slice(0,5))
+    const product = products.find((item) => item._id === id);
+    console.log("product", product);
+
+    const handleAddToCart = () => {
+        if (added) {
+            navigate("/cart");
+        } else {
+            addToCart(product._id);
+            setAdded(true);
         }
-    } ) ,[products])
+    }
+    useEffect((() => {
 
-    useEffect(()=>{
-        setThumbnail(product?.image[0] ? product.image[0] : null )
-    } , [product])
+        if (products.length > 0) {
+            let productCopy = products.slice();
+            console.log("productCopy", productCopy)
+            productCopy = productCopy.filter((item) => product.category === item.category)
+            console.log("productCopy", productCopy)
+            setRelatedProducts(productCopy.slice(0, 5))
+        }
+    }), [products])
+
     useEffect(() => {
-  window.scrollTo(0, 0);
-}, [id]);
+        setThumbnail(product?.image[0] ? product.image[0] : null)
+    }, [product])
+    useEffect(() => {
+        window.scrollTo(0, 0);
+    }, [id]);
 
     return product && (
         <div className="mt-12">
@@ -85,10 +95,10 @@ const ProductDetails = () => {
                     </ul>
 
                     <div className="flex items-center mt-10 gap-4 text-base">
-                        <button onClick={()=>addToCart(product._id)} className="w-full py-3.5 cursor-pointer font-medium bg-gray-100 text-gray-800/80 hover:bg-gray-200 transition" >
-                            Add to Cart
+                        <button onClick={handleAddToCart} className="w-full py-3.5 cursor-pointer font-medium bg-gray-100 text-gray-800/80 hover:bg-gray-200 transition" >
+                            {added ? "Go to Cart" : "Add to Cart"}
                         </button>
-                        <button onClick={()=>{addToCart(product._id); navigate("/cart")}} className="w-full py-3.5 cursor-pointer font-medium bg-purple-500 text-white hover:bg-purple-600 transition" >
+                        <button onClick={() => { addToCart(product._id); navigate("/cart") }} className="w-full py-3.5 cursor-pointer font-medium bg-purple-500 text-white hover:bg-purple-600 transition" >
                             Buy now
                         </button>
                     </div>
@@ -101,11 +111,11 @@ const ProductDetails = () => {
                     <div className="w-20 h-0.5 bg-purple-500 rounded-full my-2"></div>
                 </div>
                 <div className="grid grid-cols-2 sm:grid-cols-3 md:grid-cols-4 lg:grid-cols-5 gap-3 md:gap-6 mt-5 w-full">
-                    {relatedProducts.filter((product)=>product.inStock).map((product , i)=>(
+                    {relatedProducts.filter((product) => product.inStock).map((product, i) => (
                         <ProductCard key={i} product={product} />
                     ))}
                 </div>
-                <button onClick={()=>{navigate("/products");scrollTo(0,0)}} className="mx-auto cursor-pointer px-12 my-16 py-2.5 border rounded text-purple-500 hover:bg-purple-500/10 transition"> See more</button>
+                <button onClick={() => { navigate("/products"); scrollTo(0, 0) }} className="mx-auto cursor-pointer px-12 my-16 py-2.5 border rounded text-purple-500 hover:bg-purple-500/10 transition"> See more</button>
             </div>
         </div>
     );
