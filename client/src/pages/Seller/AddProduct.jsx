@@ -5,53 +5,56 @@ import toast from "react-hot-toast";
 
 const AddProduct = () => {
 
-    const [files , setFiles] = useState([]);
-    const [ name , setName] = useState('');
-    const [description , setDescription]  = useState('');
-    const [category , setCategory]  = useState('');
-    const [price , setPrice] = useState('');
-    const [offerPrice , setOfferPrice] = useState('');
-    const [ratings , setRatings] = useState('');
+    const [files, setFiles] = useState([]);
+    const [name, setName] = useState('');
+    const [description, setDescription] = useState('');
+    const [category, setCategory] = useState('');
+    const [price, setPrice] = useState('');
+    const [offerPrice, setOfferPrice] = useState('');
+    const [ratings, setRatings] = useState('');
+    const [loading, setLoading] = useState(false);
 
-    const {axios} = useAppContext()
+    const { axios } = useAppContext()
 
-    const onSubmitHandler =async(e)=>{
+    const onSubmitHandler = async (e) => {
         try {
             e.preventDefault();
-        const productData = {
-            name,
-            description: description.split('\n'),
-            category,
-            price,
-            offerPrice,
-            ratings
-        }
+            const productData = {
+                name,
+                description: description.split('\n'),
+                category,
+                price,
+                offerPrice,
+                ratings
+            }
 
-        const formData = new FormData();
-        console.log("formData " , formData)
-        formData.append('productData' , JSON.stringify(productData));
-        for (let i = 0; i < files.length; i++) {
-           formData.append('images' , files[i])
-            
-        }
-        const {data} = await axios.post('/api/product/add' , formData);
-        console.log("data" , data)
-        
-        if(data.success){
-            toast.success(data.message)
-            setName('')
-            setDescription('')
-            setCategory('');
-            setPrice('');
-            setOfferPrice('');
-            setRatings('')
-            setFiles([])
+            const formData = new FormData();
+            console.log("formData ", formData)
+            formData.append('productData', JSON.stringify(productData));
+            for (let i = 0; i < files.length; i++) {
+                formData.append('images', files[i])
 
-        }else{
-            toast.error(data.message)
-            console.log(data.message)
-        }
- 
+            }
+            setLoading(true);
+            const { data } = await axios.post('/api/product/add', formData);
+            setLoading(false);
+            console.log("data", data)
+
+            if (data.success) {
+                toast.success(data.message)
+                setName('')
+                setDescription('')
+                setCategory('');
+                setPrice('');
+                setOfferPrice('');
+                setRatings('')
+                setFiles([])
+
+            } else {
+                toast.error(data.message)
+                console.log(data.message)
+            }
+
         } catch (error) {
             toast.error(error.message)
             console.log(error.message)
@@ -60,74 +63,86 @@ const AddProduct = () => {
     }
     return (
         <div className="no-scrollbar flex-1 h-[95vh] overflow-y-scroll flex flex-col justify-between">
-            <form onSubmit={onSubmitHandler} className="md:p-10 p-4 space-y-5 max-w-lg">
-                <div>
-                    <p className="text-base font-medium">Product Image</p>
-                    <p className="text-sm text-gray-500 mt-1">✅ Tip: For best appearance, upload <span className="font-semibold">.png</span> images—transparent backgrounds and high quality help your product look more professional.</p>
-                    <div className="flex flex-wrap items-center gap-3 mt-2">
-                        {Array(4).fill('').map((_, index) => (
-                            <label key={index} htmlFor={`image${index}`}>
+            {loading ? (
+                <div className="flex items-center justify-center h-[95vh] w-full">
+                    <div className="flex flex-col items-center">
+                        <div className="loader mb-4"></div>
+                        <h1 className="text-xl font-semibold text-gray-700">Adding Product into Database...</h1>
+                    </div>
+                </div>
+            ) : (
+                <div className="no-scrollbar flex-1 h-[95vh] overflow-y-scroll flex flex-col justify-between">
+                    <form onSubmit={onSubmitHandler} className="md:p-10 p-4 space-y-5 max-w-lg">
+                        <div>
+                            <p className="text-base font-medium">Product Image</p>
+                            <p className="text-sm text-gray-500 mt-1">✅ Tip: For best appearance, upload <span className="font-semibold">.png</span> images—transparent backgrounds and high quality help your product look more professional.</p>
+                            <div className="flex flex-wrap items-center gap-3 mt-2">
+                                {Array(4).fill('').map((_, index) => (
+                                    <label key={index} htmlFor={`image${index}`}>
 
 
-                                <input onChange={(e)=>{
-                                    const updatedFiles = [...files]
-                                    updatedFiles[index] = e.target.files[0];
-                                    setFiles(updatedFiles)
-                                }} accept="image/*" type="file" id={`image${index}`} hidden />
-                                <img className="max-w-24 cursor-pointer" src={files[index]? 
-                                    URL.createObjectURL(files[index]) : assets.upload_area
-                                 } alt="uploadArea" />
-                            </label>
-                        ))}
-                    </div>
+                                        <input onChange={(e) => {
+                                            const updatedFiles = [...files]
+                                            updatedFiles[index] = e.target.files[0];
+                                            setFiles(updatedFiles)
+                                        }} accept="image/*" type="file" id={`image${index}`} hidden />
+                                        <img className="max-w-24 cursor-pointer" src={files[index] ?
+                                            URL.createObjectURL(files[index]) : assets.upload_area
+                                        } alt="uploadArea" />
+                                    </label>
+                                ))}
+                            </div>
+                        </div>
+                        <div className="flex flex-col gap-1 max-w-md">
+                            <label className="text-base font-medium" htmlFor="product-name">Product Name</label>
+                            <input
+                                onChange={(e) => setName(e.target.value)} value={name}
+                                type="text" placeholder="Type here" className="outline-none md:py-2.5 py-2 px-3 rounded border border-gray-500/40" required />
+                        </div>
+                        <div className="flex flex-col gap-1 max-w-md">
+                            <label className="text-base font-medium" htmlFor="product-description">Product Description</label>
+                            <textarea
+                                onChange={(e) => setDescription(e.target.value)} value={description}
+                                rows={4} className="outline-none md:py-2.5 py-2 px-3 rounded border border-gray-500/40 resize-none" placeholder="Type here"></textarea>
+                        </div>
+                        <div className="w-full flex flex-col gap-1">
+                            <label className="text-base font-medium" htmlFor="category">Category</label>
+                            <select onChange={(e) => setCategory(e.target.value)} value={category}
+                                className="outline-none md:py-2.5 py-2 px-3 rounded border border-gray-500/40">
+                                <option value="">Select Category</option>
+                                {
+                                    categories.map((item, i) => (
+                                        <option key={i} value={item.path}>{item.path} </option>
+                                    ))
+                                }
+                            </select>
+                        </div>
+                        <div className="flex items-center gap-5 flex-wrap">
+                            <div className="flex-1 flex flex-col gap-1 w-32">
+                                <label className="text-base font-medium" htmlFor="product-price">Product Price</label>
+                                <input
+                                    onChange={(e) => setPrice(e.target.value)} value={price}
+                                    id="product-price" type="number" placeholder="0" className="outline-none md:py-2.5 py-2 px-3 rounded border border-gray-500/40" required />
+                            </div>
+                            <div className="flex-1 flex flex-col gap-1 w-32">
+                                <label className="text-base font-medium" htmlFor="offer-price">Offer Price</label>
+                                <input
+                                    onChange={(e) => setOfferPrice(e.target.value)} value={offerPrice}
+                                    type="number" placeholder="0" className="outline-none md:py-2.5 py-2 px-3 rounded border border-gray-500/40" required />
+                            </div>
+                        </div>
+                        <div className="w-full flex flex-col gap-1">
+                            <label className="text-base font-medium" htmlFor="category">Ratings </label>
+                            <input
+                                onChange={(e) => setRatings(e.target.value)} value={ratings}
+                                type="number" placeholder="Type here" className="outline-none md:py-2.5 py-2 px-3 rounded border border-gray-500/40" required />
+
+                        </div>
+                        <button className=" px-8 py-2.5 bg-purple-500 text-white font-medium rounded cursor-pointer">ADD</button>
+                    </form>
                 </div>
-                <div className="flex flex-col gap-1 max-w-md">
-                    <label className="text-base font-medium" htmlFor="product-name">Product Name</label>
-                    <input
-                    onChange={(e)=> setName(e.target.value)} value={name}
-                    type="text" placeholder="Type here" className="outline-none md:py-2.5 py-2 px-3 rounded border border-gray-500/40" required />
-                </div>
-                <div className="flex flex-col gap-1 max-w-md">
-                    <label className="text-base font-medium" htmlFor="product-description">Product Description</label>
-                    <textarea
-                     onChange={(e)=> setDescription(e.target.value)} value={description}
-                    rows={4} className="outline-none md:py-2.5 py-2 px-3 rounded border border-gray-500/40 resize-none" placeholder="Type here"></textarea>
-                </div>
-                <div className="w-full flex flex-col gap-1">
-                    <label className="text-base font-medium" htmlFor="category">Category</label>
-                    <select  onChange={(e)=> setCategory(e.target.value)} value={category}
-                    className="outline-none md:py-2.5 py-2 px-3 rounded border border-gray-500/40">
-                        <option value="">Select Category</option>
-                        {
-                          categories.map((item , i)=>(
-                            <option key={i} value={item.path}>{item.path} </option>
-                          )) 
-                        }
-                    </select>
-                </div>
-                <div className="flex items-center gap-5 flex-wrap">
-                    <div className="flex-1 flex flex-col gap-1 w-32">
-                        <label className="text-base font-medium" htmlFor="product-price">Product Price</label>
-                        <input 
-                         onChange={(e)=> setPrice(e.target.value)} value={price}
-                        id="product-price" type="number" placeholder="0" className="outline-none md:py-2.5 py-2 px-3 rounded border border-gray-500/40" required />
-                    </div>
-                    <div className="flex-1 flex flex-col gap-1 w-32">
-                        <label className="text-base font-medium" htmlFor="offer-price">Offer Price</label>
-                        <input
-                         onChange={(e)=> setOfferPrice(e.target.value)} value={offerPrice}
-                      type="number" placeholder="0" className="outline-none md:py-2.5 py-2 px-3 rounded border border-gray-500/40" required />
-                    </div>
-                </div>
-                <div className="w-full flex flex-col gap-1">
-                    <label className="text-base font-medium" htmlFor="category">Ratings </label>
-                    <input
-                    onChange={(e)=> setRatings(e.target.value)} value={ratings}
-                     type="number" placeholder="Type here" className="outline-none md:py-2.5 py-2 px-3 rounded border border-gray-500/40" required />
-                  
-                </div>
-                <button  className=" px-8 py-2.5 bg-purple-500 text-white font-medium rounded cursor-pointer">ADD</button>
-            </form>
+            )}
+
         </div>
     );
 };

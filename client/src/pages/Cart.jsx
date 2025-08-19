@@ -248,8 +248,9 @@ const Cart = () => {
                             </p>
 
                             <button
+                                style={{background:' linear-gradient(to right, #187CFA, #D210B0, #604AE9)'}}
                                 onClick={() => navigate("/products")} // <-- redirect to products page
-                                className="px-6 py-3 bg-green-600 hover:bg-green-700 text-white font-medium rounded-xl shadow-md transition"
+                                className="px-6 py-3 text-white font-medium rounded-xl shadow-md transition cursor-pointer"
                             >
                                 Go Shopping
                             </button>
