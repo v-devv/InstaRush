@@ -97,19 +97,26 @@ const AddProduct = () => {
                             <label className="text-base font-medium" htmlFor="product-name">Product Name</label>
                             <input
                                 onChange={(e) => setName(e.target.value)} value={name}
-                                type="text" placeholder="Type here" className="outline-none md:py-2.5 py-2 px-3 rounded border border-gray-500/40" required />
+                                type="text" placeholder="Enter product name" className="outline-none md:py-2.5 py-2 px-3 rounded border border-gray-500/40" required />
                         </div>
                         <div className="flex flex-col gap-1 max-w-md">
                             <label className="text-base font-medium" htmlFor="product-description">Product Description</label>
                             <textarea
-                                onChange={(e) => setDescription(e.target.value)} value={description}
-                                rows={4} className="outline-none md:py-2.5 py-2 px-3 rounded border border-gray-500/40 resize-none" placeholder="Type here"></textarea>
+                                onChange={(e) => setDescription(e.target.value)}
+                                value={description}
+                                rows={4}
+                                className="outline-none md:py-2.5 py-2 px-3 rounded border border-gray-500/40 resize-none"
+                                placeholder={`Write a short description
+e.g., Juicy, organic apples from Himachal
+e.g., Rich in calcium, great for breakfast`}
+                            />
+
                         </div>
                         <div className="w-full flex flex-col gap-1">
                             <label className="text-base font-medium" htmlFor="category">Category</label>
                             <select onChange={(e) => setCategory(e.target.value)} value={category}
                                 className="outline-none md:py-2.5 py-2 px-3 rounded border border-gray-500/40">
-                                <option value="">Select Category</option>
+                                <option value="">Choose product type</option>
                                 {
                                     categories.map((item, i) => (
                                         <option key={i} value={item.path}>{item.path} </option>
@@ -122,23 +129,35 @@ const AddProduct = () => {
                                 <label className="text-base font-medium" htmlFor="product-price">Product Price</label>
                                 <input
                                     onChange={(e) => setPrice(e.target.value)} value={price}
-                                    id="product-price" type="number" placeholder="0" className="outline-none md:py-2.5 py-2 px-3 rounded border border-gray-500/40" required />
+                                    id="product-price" type="number" placeholder="Enter MRP" className="outline-none md:py-2.5 py-2 px-3 rounded border border-gray-500/40" required />
                             </div>
                             <div className="flex-1 flex flex-col gap-1 w-32">
                                 <label className="text-base font-medium" htmlFor="offer-price">Offer Price</label>
                                 <input
                                     onChange={(e) => setOfferPrice(e.target.value)} value={offerPrice}
-                                    type="number" placeholder="0" className="outline-none md:py-2.5 py-2 px-3 rounded border border-gray-500/40" required />
+                                    type="number" placeholder="Special deal price" className="outline-none md:py-2.5 py-2 px-3 rounded border border-gray-500/40" required />
                             </div>
                         </div>
                         <div className="w-full flex flex-col gap-1">
                             <label className="text-base font-medium" htmlFor="category">Ratings </label>
                             <input
-                                onChange={(e) => setRatings(e.target.value)} value={ratings}
-                                type="number" placeholder="Type here" className="outline-none md:py-2.5 py-2 px-3 rounded border border-gray-500/40" required />
+                                value={ratings}
+                                type="number" onChange={(e) => {
+                                    let value = parseInt(e.target.value, 10);
+
+                                    if (isNaN(value)) {
+                                        setRatings("");
+                                    } else if (value < 0) {
+                                        setRatings(1);
+                                    } else if (value > 5) {
+                                        setRatings(5);
+                                    } else {
+                                        setRatings(value);
+                                    }
+                                }} placeholder="Give a score from 1 to 5" className="outline-none md:py-2.5 py-2 px-3 rounded border border-gray-500/40" required />
 
                         </div>
-                        <button className=" px-8 py-2.5 bg-purple-500 text-white font-medium rounded cursor-pointer">ADD</button>
+                        <button className=" px-8 py-2.5 bg-purple-500 text-white font-medium rounded cursor-pointer">Add to Store</button>
                     </form>
                 </div>
             )}
