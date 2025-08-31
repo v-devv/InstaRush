@@ -39,7 +39,9 @@ html, body {
   font-family: "Grechen Fuemen", cursive;
   
 }
-
+.background-clr{
+    background: linear-gradient(to right, #187CFA, #D210B0, #604AE9);
+}
 .loader {
   width: 50px;
   height: 50px;

@@ -34,7 +34,10 @@ const MyOrders = () => {
             </div>
             {loading && (
                 <div className="flex items-center justify-center h-[50vh] ">
-                    <div className='loader'> </div>
+                    <div className='loader'>
+                        <p className="text-gray-700 text-lg font-medium text-center">
+      Gathering your recent orders...
+    </p> </div>
 
                 </div>
             )}
@@ -52,7 +55,7 @@ const MyOrders = () => {
                                 <div key={i} className={`relative bg-white text-gray-500/70 ${order.items.length !== i + 1 && "border-b"} border-gray-300 flex flex-col md:flex-row md:items-center justify-between p-4 py-5 md:gap-16 w-full max-w-4xl`} >
                                     <div className='flex items-center mb-4 md:mb-0'>
 
-                                        <div onClick={ ()=> navigate(`/products/${item.product.category}/${item.product._id}`)} className='bg-purple-500/10 p-4 rounded-lg cursor-pointer'>
+                                        <div onClick={ ()=> navigate(`/products/${item.product.category}/${item.product._id}`)} className='bg-gray-100 p-4 rounded-lg cursor-pointer'>
                                         {console.log(item, 'item')}
                                             <img   src={item.product?.image[0]} className='w-16 h-16 ' alt="" />
                                         </div>

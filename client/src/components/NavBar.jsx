@@ -11,6 +11,7 @@ import toast from 'react-hot-toast';
 const NavBar = () => {
     const [open, setOpen] = useState(false);
     const menuRef = useRef(null);
+    const buttonRef = useRef(null);
     const { user, setUser, setShowUserLogin, seller, navigate, axios, setSearchQuery, searchQuery, getCartCount, setDarkMode, darkMode } = useAppContext();
     const logout = async () => {
         try {
@@ -24,27 +25,28 @@ const NavBar = () => {
             toast.error(error.message)
         }
     }
-  useEffect(() => {
-    const handleClickOutside = (e) => {
-      if (menuRef.current && !menuRef.current.contains(e.target)) {
-        setOpen(false);
-      }
-    };
+    useEffect(() => {
+        const handleClickOutside = (e) => {
+            if (menuRef.current && !menuRef.current.contains(e.target) && buttonRef.current &&
+                !buttonRef.current.contains(e.target)) {
+                setOpen(false);
+            }
+        };
 
-    const handleScroll = () => {
-      setOpen(false);
-    };
+        const handleScroll = () => {
+            setOpen(false);
+        };
 
-    if (open) {
-      document.addEventListener('mousedown', handleClickOutside);
-      window.addEventListener('scroll', handleScroll);
-    }
+        if (open) {
+            document.addEventListener('mousedown', handleClickOutside);
+            window.addEventListener('scroll', handleScroll);
+        }
 
-    return () => {
-      document.removeEventListener('mousedown', handleClickOutside);
-      window.removeEventListener('scroll', handleScroll);
-    };
-  }, [open]);
+        return () => {
+            document.removeEventListener('mousedown', handleClickOutside);
+            window.removeEventListener('scroll', handleScroll);
+        };
+    }, [open]);
     useEffect(() => {
         if (searchQuery.length > 0) {
             navigate('/products')
@@ -81,7 +83,7 @@ const NavBar = () => {
                 >
                     Seller
                 </span>
-                <span >Welcome ,<p className='font-semibold'> {user?.name?.split(" ")[0]}</p></span>
+                {user && <span >Welcome ,<p className='font-semibold'> {user?.name?.split(" ")[0]}</p></span>}
 
 
 
@@ -116,15 +118,18 @@ const NavBar = () => {
                     <button className='absolute p-auto -top-2 -right-3 text-xs text-white bg-red-500 w-[18px] h-[18px] rounded-full'> {getCartCount()} </button>
                 </div>
 
-                <button onClick={() => open ? setOpen(false) : setOpen(true)} aria-label='menu'>
+                <button ref={buttonRef} onClick={() => setOpen(!open)} aria-label='menu'>
+
                     <CiMenuFries className='cursor-pointer' />
                 </button>
             </div>
 
             {open && (
-                <div ref={menuRef} className={`transition-all duration-300 ease-in-out transform 
-                    ${open ? 'flex translate-y-0 opacity-100' : '-translate-y-5 opacity-0 pointer-events-none'} 
-                    absolute top-[60px] left-0 z-10 w-full bg-white shadow-md py-4 flex-col items-start gap-2 px-5 text-sm sm:hidden`}>
+                <div ref={menuRef}   className={`absolute top-full right-0 z-10 
+  bg-white shadow-md py-4 flex flex-col items-start gap-2 px-5 text-sm sm:hidden border border-purple-500 rounded-l-2xl
+  transition-all duration-300
+  ${open ? "translate-y-0 opacity-100" : "-translate-y-5 opacity-0 pointer-events-none"}`}>
+
                     <NavLink to="/" onClick={() => setOpen(false)} >Home</NavLink>
                     <span
                         className='cursor-pointer'
@@ -150,10 +155,11 @@ const NavBar = () => {
                                     setOpen(false);
                                 }
 
-                            } className='cursor-pointer px-6 py-2 mt-2 bg-purple-500 hover:bg-purple-600 transition text-white text-sm rounded-full' > LogIn</button>
+                            } className='cursor-pointer  px-4 py-1.5  mt-2 background-clr transition text-white text-sm rounded-full' > LogIn</button>
 
                         ) : (
-                            <button onClick={logout} className='cursor-pointer px-6 py-2 mt-2 bg-purple-500 hover:bg-purple-600 transition text-white text-sm rounded-full' > LogOut</button>
+                            
+                            <button onClick={logout} className='cursor-pointer px-4 py-1.5 mt-2 background-clr transition text-white text-sm rounded-full' > LogOut</button>
 
                         )
                     }
