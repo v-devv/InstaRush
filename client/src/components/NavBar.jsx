@@ -126,13 +126,14 @@ const NavBar = () => {
 
             {open && (
                 <div ref={menuRef}   className={`absolute top-full right-0 z-10 
-  bg-white shadow-md py-4 flex flex-col items-start gap-2 px-5 text-sm sm:hidden border border-purple-500 rounded-l-2xl
+  bg-white shadow-md py-4 w-[60vw] flex flex-col items-start gap-4 px-5 text-sm sm:hidden border border-purple-500 rounded-l-2xl
   transition-all duration-300
   ${open ? "translate-y-0 opacity-100" : "-translate-y-5 opacity-0 pointer-events-none"}`}>
 
-                    <NavLink to="/" onClick={() => setOpen(false)} >Home</NavLink>
+                    <NavLink to="/" className="w-full px-4 py-2 hover:bg-gray-500/50 hover:text-white rounded" onClick={() => setOpen(false)} >Home</NavLink>
                     <span
-                        className='cursor-pointer'
+                        
+                        className="w-full px-4 py-2 hover:bg-gray-500/50 hover:text-white rounded cursor-pointer" 
                         onClick={() => {
                             setOpen(false);
                             if (seller) {
@@ -144,9 +145,10 @@ const NavBar = () => {
                     >
                         Seller
                     </span>
-                    <NavLink to="/products" onClick={() => setOpen(false)} >All Products</NavLink>
-                    {user && <NavLink to="/my-orders" onClick={() => setOpen(false)} >My Orders</NavLink>}
-                    <NavLink to="/contact" onClick={() => setOpen(false)}> Contact</NavLink>
+                    <NavLink to="/products" className="w-full px-4 py-2 hover:bg-gray-500/50 hover:text-white rounded"  onClick={() => setOpen(false)} >All Products</NavLink>
+                    {user && <NavLink className="w-full px-4 py-2 hover:bg-gray-500/50 hover:text-white rounded"  to="/my-orders" onClick={() => setOpen(false)} >My Orders</NavLink>}
+                    <NavLink to="/contact" className="w-full px-4 py-2 hover:bg-gray-500/50 hover:text-white rounded"  onClick={() => setOpen(false)}> Contact</NavLink>
+                    <div className='border-b border-gray-500 w-full'></div>
                     {
                         !user ? (
                             <button onClick={
@@ -155,11 +157,11 @@ const NavBar = () => {
                                     setOpen(false);
                                 }
 
-                            } className='cursor-pointer  px-4 py-1.5  mt-2 background-clr transition text-white text-sm rounded-full' > LogIn</button>
+                            } className='cursor-pointer mx-auto px-8 py-2 font-medium mt-1 background-clr transition text-white text-m rounded-full' > LogIn</button>
 
                         ) : (
                             
-                            <button onClick={logout} className='cursor-pointer px-4 py-1.5 mt-2 background-clr transition text-white text-sm rounded-full' > LogOut</button>
+                            <button onClick={logout} className='cursor-pointer mx-auto px-8 py-2 font-medium mt-1 background-clr transition text-white text-m rounded-full'  > LogOut</button>
 
                         )
                     }
