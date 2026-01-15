@@ -1,0 +1,38 @@
+import express from "express";
+import cors from "cors";
+import cookieParser from "cookie-parser";
+
+import connectDB from "../configs/db.js";
+import connectCloudinary from "../configs/cloudinary.js";
+
+import userRouter from "../routes/userRouter.js";
+import sellerRouter from "../routes/sellerRouter.js";
+import productRouter from "../routes/productRoute.js";
+import cartRouter from "../routes/cartRoute.js";
+import addressRouter from "../routes/addressRoute.js";
+import orderRouter from "../routes/orderRouter.js";
+
+const app = express();
+
+app.use(
+  cors({
+    origin: true,
+    credentials: true,
+  })
+);
+app.options("*", cors());
+
+app.use(express.json());
+app.use(cookieParser());
+
+await connectDB();
+await connectCloudinary();
+
+app.use("/api/user", userRouter);
+app.use("/api/seller", sellerRouter);
+app.use("/api/product", productRouter);
+app.use("/api/cart", cartRouter);
+app.use("/api/address", addressRouter);
+app.use("/api/order", orderRouter);
+
+export default app;
