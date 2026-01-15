@@ -2,15 +2,15 @@ import express from "express";
 import cors from "cors";
 import cookieParser from "cookie-parser";
 
-import connectDB from "../configs/db.js";
-import connectCloudinary from "../configs/cloudinary.js";
+import connectDB from "../server/configs/db.js";
+import connectCloudinary from "../server/configs/cloudinary.js";
 
-import userRouter from "../routes/userRouter.js";
-import sellerRouter from "../routes/sellerRouter.js";
-import productRouter from "../routes/productRoute.js";
-import cartRouter from "../routes/cartRoute.js";
-import addressRouter from "../routes/addressRoute.js";
-import orderRouter from "../routes/orderRouter.js";
+import userRouter from "../server/routes/userRouter.js";
+import sellerRouter from "../server/routes/sellerRouter.js";
+import productRouter from "../server/routes/productRoute.js";
+import cartRouter from "../server/routes/cartRoute.js";
+import addressRouter from "../server/routes/addressRoute.js";
+import orderRouter from "../server/routes/orderRouter.js";
 
 const app = express();
 
