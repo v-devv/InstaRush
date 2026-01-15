@@ -14,35 +14,30 @@ import orderRouter from './routes/orderRouter.js';
 dotenv.config();
 
 const app = express();
-const PORT = process.env.PORT || 5000;
 
-await connectDB();
-await connectCloudinary();
-
-const originsAllowed = [
+// ✅ MUST be FIRST
+const allowedOrigins = [
   'http://localhost:5173',
   'https://insta-rush-front.vercel.app',
   'https://www.instarush.store'
 ];
 
-app.use(express.json());
-app.use(cookieParser());
-
 app.use(
   cors({
-    origin: function (origin, callback) {
-      if (!origin || originsAllowed.includes(origin)) {
-        callback(null, true);
-      } else {
-        callback(new Error('Not allowed by CORS'));
-      }
-    },
+    origin: allowedOrigins,
     credentials: true,
   })
 );
 
-// handle preflight requests
+// ✅ MUST be BEFORE routes
 app.options('*', cors());
+
+app.use(express.json());
+app.use(cookieParser());
+
+// connect DB & cloudinary ONCE
+await connectDB();
+await connectCloudinary();
 
 app.get('/', (req, res) => {
   res.send('Server started successfully!');
@@ -55,6 +50,4 @@ app.use('/api/cart', cartRouter);
 app.use('/api/address', addressRouter);
 app.use('/api/order', orderRouter);
 
-app.listen(PORT, () => {
-  console.log(`Server running on port ${PORT}`);
-});
+export default app;
