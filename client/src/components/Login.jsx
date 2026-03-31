@@ -41,13 +41,14 @@ const Login = () => {
         setVerifyOtpMode(true);
       }
     } catch (error) {
-      if (
-        error.response ||
-        data.message === "OTP already sent. Please try again later"
-      ) {
+      const message = error?.response?.data?.message;
+
+      if (message === "OTP already sent. Please try again later") {
         setVerifyOtpMode(true);
+      } else if (message === "User not registered. Please register first") {
+        setError("email", { type: "manual", message });
       } else {
-        toast.error("Failed to send OTP");
+        toast.error(message || "Failed to send OTP");
       }
     }
 
