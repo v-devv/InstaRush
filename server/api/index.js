@@ -1,7 +1,8 @@
+import dotenv from 'dotenv';
+dotenv.config();
 import express from 'express';
 import cors from 'cors';
 import cookieParser from 'cookie-parser';
-import dotenv from 'dotenv';
 
 import connectDB from '../configs/db.js';
 import connectCloudinary from '../configs/cloudinary.js';
@@ -13,11 +14,10 @@ import cartRouter from '../routes/cartRoute.js';
 import addressRouter from '../routes/addressRoute.js';
 import orderRouter from '../routes/orderRouter.js';
 
-dotenv.config();
 
 const app = express();
 
-/* ================= CORS ================= */
+// CORS
 const allowedOrigins = [
   'http://localhost:5173',
   'https://insta-rush-front.vercel.app',
@@ -37,17 +37,16 @@ app.use(
   })
 );
 
-/* ❌ DO NOT use app.options('*') */
 
-/* ============== MIDDLEWARES ============== */
+// MIDDLEWARES 
 app.use(express.json());
 app.use(cookieParser());
 
-/* ============== DB & CLOUDINARY ============== */
+//DB & CLOUDINARY
 await connectDB();
 await connectCloudinary();
 
-/* ============== ROUTES ============== */
+//ROUTES
 app.get('/', (req, res) => {
   res.send('Server running successfully 🚀');
 });

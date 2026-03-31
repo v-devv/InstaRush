@@ -17,7 +17,11 @@ const userSchema = new mongoose.Schema({
     cartItems:{
         type : Object,
         default : {}
-    }
+    },
+    OTP:String,
+    OTPExpiry:Number,
+    createdAt:Number,
+    updatedAt:Number,
 } , {minimize : false} )
 
 const User = mongoose.models.user || mongoose.model("user" , userSchema);
