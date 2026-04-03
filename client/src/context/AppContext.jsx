@@ -128,7 +128,7 @@ export const AppContextProvider = ({ children }) => {
             console.log("itemInfo" , itemInfo)
             console.log(items , cartItems , cartItems[items], "Items")
             if(cartItems[items] >0){
-                totalAmount += itemInfo.offerPrice * cartItems[items]
+                totalAmount += itemInfo?.offerPrice * cartItems[items]
                 console.log("totalAmount" ,totalAmount)
             }
         }

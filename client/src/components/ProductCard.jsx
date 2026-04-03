@@ -28,7 +28,7 @@ const ProductCard = ( {product}) => {
                 <p>({product.ratings})</p>
             </div>
             <div className='flex items-end justify-between mt-3'>
-                <p className='md:text-xl text-base font-medium text-purple-500'>₹{product.offerPrice} <span className='text-gray-500/60 md:text-sm text-xs line-through'> ₹{product.price} </span> </p>
+                <p className='md:text-xl text-base font-medium text-purple-500'>₹{product?.offerPrice} <span className='text-gray-500/60 md:text-sm text-xs line-through'> ₹{product.price} </span> </p>
                 <div className='text-purple-500' onClick={(e)=>e.stopPropagation()}> 
                     {!cartItems[product._id]  ? (
                         <button 
