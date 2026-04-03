@@ -13,7 +13,25 @@ const NavBar = () => {
     const menuRef = useRef(null);
     const buttonRef = useRef(null);
     const { user, setUser, setShowUserLogin, seller, navigate, axios, setSearchQuery, searchQuery, getCartCount, setDarkMode, darkMode } = useAppContext();
-    const logout = async () => {
+    const logout = async () => {const logout = async () => {
+  try {
+    const { data } = await axios.get('/api/user/logout', { withCredentials: true });
+
+    if (data.success) {
+      toast.success(data.message);
+
+      setUser(null);
+      setCartItems({});
+      setSeller(false);
+
+      navigate('/');
+      window.location.reload();
+    }
+
+  } catch (error) {
+    toast.error(error.message);
+  }
+};
         try {
             const { data } = await axios.get('/api/user/logout' , { withCredentials : true });
             if (data.success) {
