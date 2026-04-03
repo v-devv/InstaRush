@@ -15,7 +15,7 @@ const NavBar = () => {
     const { user, setUser, setShowUserLogin, seller, navigate, axios, setSearchQuery, searchQuery, getCartCount, setDarkMode, darkMode } = useAppContext();
     const logout = async () => {
         try {
-            const { data } = await axios.get('/api/user/logout');
+            const { data } = await axios.get('/api/user/logout' , { withCredentials : true });
             if (data.success) {
                 toast.success(data.message)
                 setUser(null);
