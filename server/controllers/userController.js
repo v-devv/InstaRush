@@ -87,18 +87,22 @@ export const checkAuth = async (req, res) => {
 //logout userController
 export const logout = async (req, res) => {
   try {
-    res.clearCookie("token", {
-      httpOnly: true, 
-      secure: process.env.NODE_ENV === "production", 
-      sameSite: process.env.NODE_ENV === "production" ? "none" : "strict",
-      path : "/",
+
+    res.cookie("token", "", {
+      httpOnly: true,
+      secure: true,
+      sameSite: "none",
+      path: "/",
+      expires: new Date(0)
     });
-    return res
-      .status(200)
-      .json({ success: true, message: "Logged out successfully" });
+
+    res.status(200).json({
+      success: true,
+      message: "Logged out successfully"
+    });
+
   } catch (error) {
-    console.log(error.message);
-    return res.status(500).json({ message: "Internal server error" });
+    res.status(500).json({ message: "Internal server error" });
   }
 };
 
